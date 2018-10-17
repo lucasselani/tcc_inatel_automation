@@ -11,7 +11,7 @@ number_of_interactions = 3
 filtered_results = []
 CHROME = 'Chrome'
 FIREFOX = 'Firefox'
-BASE_URL = "http://localhost:8000"
+BASE_URL = "https://ssr-vs-csr.herokuapp.com"
 CSR_URL = BASE_URL + "/csr"
 SSR_URL = BASE_URL + "/ssr"
 
@@ -62,7 +62,7 @@ def main():
 	## Salvar o resultado em um novo arquivo JSON
 	#with open('chrome_data.json', 'w') as input_file:
 	#	json.dump(filtered_results, input_file)
-	metrics.metrics(filtered_results)
+        metrics.metrics(filtered_results)
 
 
 

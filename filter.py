@@ -10,7 +10,7 @@ class Data:
         self.ConnectTime = []
         self.SendTime = []
         self.ReceiveTime = []
-        self.TotalTime = []
+        self.TotalTime = 0
         self.totalByte = 0
         self.numReq = 0
         self.numExec = 0
@@ -67,7 +67,7 @@ def filter(data, numExec, url):
             newData.ReceiveTime.append(each_entrie['timings']['receive'])
 
             print("Total: ", each_entrie['time'])
-            newData.TotalTime.append(each_entrie['time'])
+            newData.TotalTime = newData.TotalTime + each_entrie['time']
 
             print("----------------------------------")
             newData.numReq = newData.numReq + 1

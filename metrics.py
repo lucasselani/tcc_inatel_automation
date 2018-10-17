@@ -14,3 +14,9 @@ def metrics(data_list):
     size_avg = np.average(npSizes)
     time_std_dev = np.std(npTimes)
     time_avg = np.average(npTimes)
+
+    print("RESULTADOS:")
+    print("Tamanho - Desvio Padrao:", size_std_dev)
+    print("Tamanho - Media:", size_avg)
+    print("Times - Desvio Padrao:", time_std_dev)
+    print("Times - Media:", time_avg)
