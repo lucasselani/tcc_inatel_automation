@@ -1,26 +1,27 @@
 class Data:
-    method = []
-    url = []
-    mimeType = []
-    sumDNS = 0
-    sumWait = 0
-    sumSSL = 0
-    sumBlocked = 0
-    sumConnect = 0
-    sumSend = 0
-    sumReceive = 0
-    totalByte = 0
-    numReq = 0
-    numExec = 0
+    def __init__(self):
+        self.method = []
+        self.url = []
+        self.mimeType = []
+        self.sumDNS = 0
+        self.sumWait = 0
+        self.sumSSL = 0
+        self.sumBlocked = 0
+        self.sumConnect = 0
+        self.sumSend = 0
+        self.sumReceive = 0
+        self.totalByte = 0
+        self.numReq = 0
+        self.numExec = 0
 
 
-def filter(data, numExec):    
+def filter(data, numExec, url):    
     newData = Data()
 
 
     ## Verifica quais entries tem o URL https://ssr-vs-csr.herokuapp.com/ssr
     for each_entrie in data['log']['entries']:
-        if "https://ssr-vs-csr.herokuapp.com/" in each_entrie['request']['url']:
+        if url in each_entrie['request']['url']:
             print("Method: ", each_entrie['request']['method'])
             newData.method.append(each_entrie['request']['method'])
 
@@ -70,4 +71,3 @@ def filter(data, numExec):
     newData.numExec = numExec
     ## Salvar o resultado em um novo arquivo JSON
     return newData
-   
