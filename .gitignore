@@ -111,3 +111,7 @@ dmypy.json
 
 # logs
 *.log
+
+*.json
+
+*.har
