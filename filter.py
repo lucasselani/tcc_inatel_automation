@@ -1,112 +1,73 @@
-import json
-import importlib
-import numpy as np
+class Data:
+    method = []
+    url = []
+    mimeType = []
+    sumDNS = 0
+    sumWait = 0
+    sumSSL = 0
+    sumBlocked = 0
+    sumConnect = 0
+    sumSend = 0
+    sumReceive = 0
+    totalByte = 0
+    numReq = 0
+    numExec = 0
 
 
-## Abre o arquivo JSON
-with open("data.json") as input_file:
-    data = json.load(input_file)
+def filter(data, numExec):    
+    newData = Data()
 
 
+    ## Verifica quais entries tem o URL https://ssr-vs-csr.herokuapp.com/ssr
+    for each_entrie in data['log']['entries']:
+        if "https://ssr-vs-csr.herokuapp.com/" in each_entrie['request']['url']:
+            print("Method: ", each_entrie['request']['method'])
+            newData.method.append(each_entrie['request']['method'])
 
-dados = []
-i = 0
-sumDNS = 0
-sumWait = 0
-sumSSL = 0
-sumBlocked = 0
-sumConnect = 0
-sumSend = 0
-sumReceive = 0
-totalByte = 0
+            print("URL: ", each_entrie['request']['url'])
+            newData.url.append(each_entrie['request']['url'])
 
-## Verifica quais entries tem o URL https://ssr-vs-csr.herokuapp.com/ssr
-for each_entrie in data['log']['entries']:
-    if "https://ssr-vs-csr.herokuapp.com/" in each_entrie['request']['url']:
-        print("Method: ", each_entrie['request']['method'])
-        dados.append(each_entrie['request']['method'])
+            print("Response:")
 
-        print("URL: ", each_entrie['request']['url'])
-        dados.append(each_entrie['request']['url'])
+            print("Content Size: ", each_entrie['response']['content']['size'])
+            newData.totalByte = newData.totalByte + each_entrie['response']['content']['size']
 
-        print("Request:")
+            print("Content Mimetype: ", each_entrie['response']['content']['mimeType'])
+            newData.mimeType.append(each_entrie['response']['content']['mimeType'])
 
-        print("Header Size: ", each_entrie['request']['headersSize'])
-        ##dados.append(each_entrie['request']['headersSize'])
-        totalByte = totalByte + each_entrie['request']['headersSize']
+            print("Header Size: ", each_entrie['response']['headersSize'])
+            newData.totalByte = newData.totalByte + each_entrie['response']['headersSize']
 
-        print("Body Size: ", each_entrie['request']['bodySize'])
-        ##dados.append(each_entrie['request']['bodySize'])
-        totalByte = totalByte + each_entrie['request']['bodySize']
+            print("Body Size: ", each_entrie['response']['bodySize'])
+            newData.totalByte = newData.totalByte + each_entrie['response']['bodySize']
 
-        print("Response:")
+            print("Timings [ms]:")
 
-        print("Content Size: ", each_entrie['response']['content']['size'])
-        ##dados.append(each_entrie['response']['content']['size'])
-        totalByte = totalByte + each_entrie['response']['content']['size']
+            print("DNS: ", each_entrie['timings']['dns'])
+            newData.sumDNS = newData.sumDNS + each_entrie['timings']['dns']
 
-        print("Content Mimetype: ", each_entrie['response']['content']['mimeType'])
-        ##dados.append(each_entrie['response']['content']['mimeType'])
+            print("Wait: ", each_entrie['timings']['wait'])
+            newData.sumWait = newData.sumWait + each_entrie['timings']['wait']
 
-        print("Header Size: ", each_entrie['response']['headersSize'])
-        ##dados.append(each_entrie['response']['headersSize'])
-        totalByte = totalByte + each_entrie['response']['headersSize']
+            print("SSL: ", each_entrie['timings']['ssl'])
+            newData.sumSSL = newData.sumSSL + each_entrie['timings']['ssl']
 
-        print("Body Size: ", each_entrie['response']['bodySize'])
-        ##dados.append(each_entrie['response']['bodySize'])
-        totalByte = totalByte + each_entrie['response']['bodySize']
+            print("Blocked: ", each_entrie['timings']['blocked'])
+            newData.sumBlocked = newData.sumBlocked + each_entrie['timings']['blocked']
 
-        print("Timings [ms]:")
+            print("Connect: ", each_entrie['timings']['connect'])
+            newData.sumConnect = newData.sumConnect + each_entrie['timings']['connect']
 
-        print("DNS: ", each_entrie['timings']['dns'])
-        ##dados.append(each_entrie['timings']['dns'])
-        sumDNS = sumDNS + each_entrie['timings']['dns']
+            print("Send: ", each_entrie['timings']['send'])
+            newData.sumSend = newData.sumSend + each_entrie['timings']['send']
 
-        print("Wait: ", each_entrie['timings']['wait'])
-        ##dados.append(each_entrie['timings']['wait'])
-        sumWait = sumWait + each_entrie['timings']['wait']
+            print("Receive: ", each_entrie['timings']['receive'])
+            newData.sumReceive = newData.sumReceive + each_entrie['timings']['receive']
 
-        print("SSL: ", each_entrie['timings']['ssl'])
-        ##dados.append(each_entrie['timings']['ssl'])
-        sumSSL = sumSSL + each_entrie['timings']['ssl']
-
-        print("Blocked: ", each_entrie['timings']['blocked'])
-        ##dados.append(each_entrie['timings']['blocked'])
-        sumBlocked = sumBlocked + each_entrie['timings']['blocked']
-
-        print("Connect: ", each_entrie['timings']['connect'])
-        ##dados.append(each_entrie['timings']['connect'])
-        sumConnect = sumConnect + each_entrie['timings']['connect']
-
-        print("Send: ", each_entrie['timings']['send'])
-        ##dados.append(each_entrie['timings']['send'])
-        sumSend = sumSend + each_entrie['timings']['send']
-
-        print("Receive: ", each_entrie['timings']['receive'])
-        ##dados.append(each_entrie['timings']['receive'])
-        sumReceive = sumReceive + each_entrie['timings']['receive']
-
-        print("----------------------------------")
-        i = i + 1
-        
-
-
-        print(dados)
-
-
-print("Tempo DNS", sumDNS)
-dados.append(sumDNS)
-
-
-sumTotal = sumDNS + sumBlocked + sumConnect + sumReceive + sumSend + sumSSL + sumSSL + sumWait
-print("Tempo total: ", sumTotal)
-dados.append(sumTotal)
-
-print("Total de bytes trafegados: ", totalByte)
-dados.append(totalByte)
-print(i)
-
-## Salvar o resultado em um novo arquivo JSON
-with open('new_data.json', 'w') as input_file:
-    json.dump(dados, input_file)     
+            print("----------------------------------")
+            newData.numReq = newData.numReq + 1
+            
+    newData.numExec = numExec
+    ## Salvar o resultado em um novo arquivo JSON
+    return newData
    
