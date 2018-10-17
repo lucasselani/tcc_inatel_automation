@@ -3,13 +3,14 @@ class Data:
         self.method = []
         self.url = []
         self.mimeType = []
-        self.sumDNS = 0
-        self.sumWait = 0
-        self.sumSSL = 0
-        self.sumBlocked = 0
-        self.sumConnect = 0
-        self.sumSend = 0
-        self.sumReceive = 0
+        self.DNSTime = []
+        self.WaitTime = []
+        self.SSLTime = []
+        self.BlockedTime = []
+        self.ConnectTime = []
+        self.SendTime = []
+        self.ReceiveTime = []
+        self.TotalTime = []
         self.totalByte = 0
         self.numReq = 0
         self.numExec = 0
@@ -45,25 +46,28 @@ def filter(data, numExec, url):
             print("Timings [ms]:")
 
             print("DNS: ", each_entrie['timings']['dns'])
-            newData.sumDNS = newData.sumDNS + each_entrie['timings']['dns']
+            newData.DNSTime.append(each_entrie['timings']['dns'])
 
             print("Wait: ", each_entrie['timings']['wait'])
-            newData.sumWait = newData.sumWait + each_entrie['timings']['wait']
+            newData.WaitTime.append(each_entrie['timings']['wait'])
 
             print("SSL: ", each_entrie['timings']['ssl'])
-            newData.sumSSL = newData.sumSSL + each_entrie['timings']['ssl']
+            newData.SSLTime.append(each_entrie['timings']['ssl'])
 
             print("Blocked: ", each_entrie['timings']['blocked'])
-            newData.sumBlocked = newData.sumBlocked + each_entrie['timings']['blocked']
+            newData.BlockedTime.append(each_entrie['timings']['blocked'])
 
             print("Connect: ", each_entrie['timings']['connect'])
-            newData.sumConnect = newData.sumConnect + each_entrie['timings']['connect']
+            newData.ConnectTime.append(each_entrie['timings']['connect'])
 
             print("Send: ", each_entrie['timings']['send'])
-            newData.sumSend = newData.sumSend + each_entrie['timings']['send']
+            newData.SendTime.append(each_entrie['timings']['send'])
 
             print("Receive: ", each_entrie['timings']['receive'])
-            newData.sumReceive = newData.sumReceive + each_entrie['timings']['receive']
+            newData.ReceiveTime.append(each_entrie['timings']['receive'])
+
+            print("Total: ", each_entrie['time'])
+            newData.TotalTime.append(each_entrie['time'])
 
             print("----------------------------------")
             newData.numReq = newData.numReq + 1
