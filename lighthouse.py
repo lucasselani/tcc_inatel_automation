@@ -1,32 +1,51 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Please, make sure you have node/npm installed and the ligthouse node module
+# To install lighthouse, use: npm install lighthouse -g
+
 import filter_audit as filter
 import extract_metrics as extract
 import time
 import os
 
-BASE_URL = 'http://localhost:3000'
-CSR_URL = BASE_URL + '/csr'
-SSR_URL = BASE_URL + ''
+CSR = 'csr'
+SSR = 'ssr'
+CSR_URL = 'http://client-side-app.herokuapp.com/'
+SSR_URL = 'http://server-side-app.herokuapp.com/'
 number_of_interactions = 100
 
 def loop_through(i=number_of_interactions):
-    filtered_results = []
+    ssr_filtered_results = []
+    csr_filtered_results = []
+
     for x in range(0, i):
-        os.system(('lighthouse %s --output json --output-path=./report/report_%s.json') % (SSR_URL, x)) 
+        os.system(('lighthouse %s --output json --output-path=./report/%s_report_%s.json')\
+            % (SSR_URL, CSR, x)) 
         time.sleep(1)
-        filtered_results.append(filter.filter_results(x))
+        ssr_filtered_results.append(filter.filter_results(x, CSR))
         time.sleep(1)
-    return filtered_results
+
+    for x in range(0, i):
+        os.system(('lighthouse %s --output json --output-path=./report/%s_report_%s.json')\
+            % (CSR_URL, SSR, x)) 
+        time.sleep(1)
+        csr_filtered_results.append(filter.filter_results(x, SSRs))
+        time.sleep(1)
+
+    return ssr_filtered_results, csr_filtered_results
+
+def mock_test():
+    ssr_results, csr_results = loop_through(3)
+    extract.metrics(ssr_results, SSR)
+    extract.metrics(csr_results, CSR)
 
 def test():
-    results = loop_through(3)
-    extract.metrics(results)
+    ssr_results, csr_results = loop_through()
+    extract.metrics(ssr_results, SSR)
+    extract.metrics(csr_results, CSR)
 
 def main():
-    # print('Please, make sure you have node/npm installed and the ligthouse node module')
-    # print('To install lighthouse, use: npm install lighthouse -g')
-    # raw_input('Press any key to continue')
-
-    test()
+    mock_test()
 
 if __name__ == '__main__':
     main()
