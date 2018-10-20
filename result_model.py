@@ -1,3 +1,10 @@
+class Metric:
+    def __init__(self):
+        self.avg = 0
+        self.std = 0
+        self.mean = 0
+        self.inf_mean = 0
+        self.sup_mean = 0
 class Result:
     def __init__(self):
         self.first_contentful_paint = Metric()
@@ -9,11 +16,3 @@ class Result:
         self.network_requests = Metric()
         self.total_byte_weight = Metric()
         self.dom_size = Metric()
-
-    class Metric:
-        def __init__(self):
-            self.avg = 0
-            self.std = 0
-            self.mean = 0
-            self.inf_mean = 0
-            self.sup_mean = 0

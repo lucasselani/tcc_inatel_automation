@@ -10,27 +10,26 @@ import os
 
 CSR = 'csr'
 SSR = 'ssr'
+CSR_LOCAL = 'http://localhost:5000'
+SSR_LOCAL = 'http://localhost:3000'
 CSR_URL = 'http://client-side-app.herokuapp.com/'
 SSR_URL = 'http://server-side-app.herokuapp.com/'
 number_of_interactions = 100
 
-def loop_through(i=number_of_interactions):
+def loop_through(i=number_of_interactions, ssr_url = SSR_URL, csr_url = CSR_URL):
     ssr_filtered_results = []
     csr_filtered_results = []
 
     for x in range(0, i):
         os.system(('lighthouse %s --output json --output-path=./report/%s_report_%s.json')\
-            % (SSR_URL, CSR, x)) 
+            % (ssr_url, SSR, x)) 
         time.sleep(1)
-        ssr_filtered_results.append(filter.filter_results(x, CSR))
-        time.sleep(1)
-
-    for x in range(0, i):
         os.system(('lighthouse %s --output json --output-path=./report/%s_report_%s.json')\
-            % (CSR_URL, SSR, x)) 
+            % (csr_url, CSR, x)) 
         time.sleep(1)
-        csr_filtered_results.append(filter.filter_results(x, SSRs))
-        time.sleep(1)
+        
+        ssr_filtered_results.append(filter.filter_results(x, SSR))
+        csr_filtered_results.append(filter.filter_results(x, CSR))
 
     return ssr_filtered_results, csr_filtered_results
 
