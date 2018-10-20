@@ -1,13 +1,16 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import json
 import data_model
 import os
 
-def filter_results(index_of_execution):
+def filter_results(index_of_execution, type_of_rendering):
     data = data_model.Data()
-    path = os.path.dirname(os.path.abspath(__file__)) + '\\report\\report_%s.json' % index_of_execution
-    print path
+    path = os.path.dirname(os.path.abspath(__file__)) + \
+      (('\\report\\%s_report_%s.json') % (index_of_execution, type_of_rendering))
     with open(path, 'r') as f:
-		json_data = json.load(f)
+		  json_data = json.load(f)
 
     data.first_contentful_paint = json_data['audits']['first-contentful-paint']['rawValue']
     data.first_meaningful_paint = json_data['audits']['first-meaningful-paint']['rawValue']
