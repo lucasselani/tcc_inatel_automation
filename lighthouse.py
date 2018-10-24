@@ -8,6 +8,7 @@ import extract_metrics as extract
 import time
 import os
 import glob
+import sys
 
 CSR = 'csr'
 SSR = 'ssr'
@@ -42,20 +43,24 @@ def loop_through(i, ssr_url = SSR_URL, csr_url = CSR_URL):
         while not success:
             success = execute_lighthouse(csr_url, CSR, x)
         
-        ssr_filtered_results.append(filter.filter_results(x, SSR))
-        csr_filtered_results.append(filter.filter_results(x, CSR))
+        ssr_results = filter.filter_results(x, SSR)
+        if ssr_results.is_valid:
+            ssr_filtered_results.append(ssr_results)
+
+        csr_results = filter.filter_results(x, CSR)
+        if csr_results.is_valid:
+            csr_filtered_results.append(csr_results)
 
     return ssr_filtered_results, csr_filtered_results
 
-def test(mock=False):
-    interactions = NUMBER_OF_INTERACTIONS if mock is False else 3
+def test(interactions=NUMBER_OF_INTERACTIONS):
     ssr_results, csr_results = loop_through(interactions) 
     extract.metrics(ssr_results, SSR, interactions)
     extract.metrics(csr_results, CSR, interactions)
 
 def main():
     clean_folders()
-    test(True)
+    test() if len(sys.argv) == 1 else test(int(sys.argv[1]))
 
 if __name__ == '__main__':
     main()
