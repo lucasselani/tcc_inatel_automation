@@ -30,6 +30,12 @@ def save_results(type_of_rendering):
     with open(path, 'w') as f_json:
 		json.dump(result.reprJSON(), f_json)
 
+def validate_data(data, list):
+    if data is not None:
+        list.append(data)
+    else:
+        result.number_of_none_values = result.number_of_none_values + 1
+
 def metrics(data_list, type_of_rendering, number_of_interactions):
     first_contentful_paint_list = []
     first_meaningful_paint_list = []
@@ -40,59 +46,23 @@ def metrics(data_list, type_of_rendering, number_of_interactions):
     network_requests_list = []
     total_byte_weight_list = []
     dom_size_list = []
-    number_of_none_results = 0
 
     for data in data_list:
-        if data.first_contentful_paint is not None:
-            first_contentful_paint_list.append(data.first_contentful_paint)
-        else:
-            number_of_none_results = number_of_none_results + 1
-
-        if data.first_meaningful_paint is not None: 
-            first_meaningful_paint_list.append(data.first_meaningful_paint)
-        else:
-            number_of_none_results = number_of_none_results + 1
-
-        if data.speed_index is not None: 
-            speed_index_list.append(data.speed_index)
-        else:
-            number_of_none_results = number_of_none_results + 1
-
-        if data.time_to_first_byte is not None: 
-            time_to_first_byte_list.append(data.time_to_first_byte)
-        else:
-            number_of_none_results = number_of_none_results + 1
-
-        if data.first_cpu_idle is not None: 
-            first_cpu_idle_list.append(data.first_cpu_idle)
-        else:
-            number_of_none_results = number_of_none_results + 1
-
-        if data.interactive is not None:  
-            interactive_list.append(data.interactive)
-        else:
-            number_of_none_results = number_of_none_results + 1
-
-        if data.network_requests is not None: 
-            network_requests_list.append(data.network_requests)
-        else:
-            number_of_none_results = number_of_none_results + 1
-
-        if data.total_byte_weight is not None:
-            total_byte_weight_list.append(data.total_byte_weight)
-        else:
-            number_of_none_results = number_of_none_results + 1
-
-        if data.dom_size is not None:  
-            dom_size_list.append(data.dom_size)       
-        else:
-            number_of_none_results = number_of_none_results + 1     
+        validate_data(data.first_contentful_paint, first_contentful_paint_list)
+        validate_data(data.first_meaningful_paint, first_meaningful_paint_list)
+        validate_data(data.speed_index, speed_index_list)
+        validate_data(data.time_to_first_byte, time_to_first_byte_list)
+        validate_data(data.first_cpu_idle, first_cpu_idle_list)
+        validate_data(data.interactive, interactive_list)
+        validate_data(data.network_requests, network_requests_list)
+        validate_data(data.total_byte_weight, total_byte_weight_list)
+        validate_data(data.dom_size, dom_size_list)
 
     result.report = type_of_rendering
     result.date = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
     result.number_of_interactions = len(data_list)
     result.total_number_of_interactions = number_of_interactions
-    result.number_of_none_values = number_of_none_results
+
     result.first_contentful_paint = get_metric_results(first_contentful_paint_list, result.first_contentful_paint)
     result.first_meaningful_paint = get_metric_results(first_meaningful_paint_list, result.first_meaningful_paint)
     result.speed_index = get_metric_results(speed_index_list, result.speed_index)
