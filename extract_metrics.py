@@ -28,7 +28,7 @@ def save_results(type_of_rendering):
     path = os.path.dirname(os.path.abspath(__file__)) + \
         (('\\results\\%s_report_%s.json') % (int(time.time()), type_of_rendering))
     with open(path, 'w') as f_json:
-		json.dump(result.reprJSON(), f_json)
+		json.dump(vars(result), f_json)
 
 def validate_data(data, list):
     if data is not None:
