@@ -21,5 +21,6 @@ def filter_results(index_of_execution, type_of_rendering):
     data.network_requests = json_data['audits']['network-requests']['rawValue']
     data.total_byte_weight = json_data['audits']['total-byte-weight']['rawValue']
     data.dom_size = json_data['audits']['dom-size']['rawValue']
+    data.validate()
 
     return data

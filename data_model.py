@@ -9,3 +9,9 @@ class Data:
         self.network_requests = 0
         self.total_byte_weight = 0
         self.dom_size = 0
+        self.is_valid = True
+    
+    def validate(self):
+        for var in vars(self).itervalues():
+            if var is None or var is 0:
+                self.is_valid = False
