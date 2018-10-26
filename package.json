@@ -1,0 +1,22 @@
+{
+  "name": "tcc_inatel_automation",
+  "version": "1.0.0",
+  "description": "Python and JS script for lighthouse's automation tool",
+  "main": "lighthouse.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasselani/tcc_inatel_automation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucasselani/tcc_inatel_automation/issues"
+  },
+  "homepage": "https://github.com/lucasselani/tcc_inatel_automation#readme",
+  "dependencies": {
+    "lighthouse": "^3.2.1"
+  }
+}

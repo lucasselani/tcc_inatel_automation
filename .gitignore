@@ -112,9 +112,12 @@ dmypy.json
 # logs
 *.log
 
-*.json
-*.txt
-*.har
+report/*.json
+report/*.txt
+report/*.har
+results/*.json
+results/*.txt
+results/*.har
 
 # Logs
 logs
