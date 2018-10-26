@@ -23,3 +23,4 @@ class Result:
         self.network_requests = vars(Metric())
         self.total_byte_weight = vars(Metric())
         self.dom_size = vars(Metric())
+        self.bootup_time = vars(Metric())
