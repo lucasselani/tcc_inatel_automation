@@ -6,6 +6,7 @@ class Metric:
         self.mean = 0
         self.inf_mean = 0
         self.sup_mean = 0
+        self.variation = 0
 
 class Result:
     def __init__(self):

@@ -13,7 +13,8 @@ import datetime
 result = result_model.Result()
 
 def get_metric_results(data, metric):
-    metric['mean'], metric['inf_mean'], metric['sup_mean'], metric['std'] = mean_confidence_interval(data)
+    metric['mean'], metric['inf_mean'], metric['sup_mean'], metric['std'], metric['variation']\
+        = mean_confidence_interval(data)
     return metric
 
 def mean_confidence_interval(data, confidence=0.95):
@@ -21,8 +22,7 @@ def mean_confidence_interval(data, confidence=0.95):
     n = len(a)
     m, se = np.mean(a), scipy.stats.sem(a)
     h = se * scipy.stats.t.ppf((1 + confidence) / 2., n-1)
-    return m, m-h, m+h, np.std(a)
-
+    return m, m-h, m+h, np.std(a), h
 
 def save_results(type_of_rendering):
     path = os.path.dirname(os.path.abspath(__file__)) + \

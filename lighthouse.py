@@ -23,7 +23,7 @@ def clean_folders():
         os.remove(f)
 
 def execute_lighthouse(url, type_of_rendering, index):
-    time.sleep(1)
+    time.sleep(0.2)
     os.system(('lighthouse %s --output json\
         --output-path=./report/%s_report_%s.json\
         --config-path=./config.js')\
