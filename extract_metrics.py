@@ -46,6 +46,7 @@ def metrics(data_list, type_of_rendering, number_of_interactions):
     network_requests_list = []
     total_byte_weight_list = []
     dom_size_list = []
+    bootup_time_list = []
 
     for data in data_list:
         validate_data(data.first_contentful_paint, first_contentful_paint_list)
@@ -57,6 +58,7 @@ def metrics(data_list, type_of_rendering, number_of_interactions):
         validate_data(data.network_requests, network_requests_list)
         validate_data(data.total_byte_weight, total_byte_weight_list)
         validate_data(data.dom_size, dom_size_list)
+        validate_data(data.bootup_time, bootup_time_list)
 
     result.report = type_of_rendering
     result.date = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
@@ -72,6 +74,7 @@ def metrics(data_list, type_of_rendering, number_of_interactions):
     result.network_requests = get_metric_results(network_requests_list, result.network_requests)
     result.total_byte_weight = get_metric_results(total_byte_weight_list, result.total_byte_weight)
     result.dom_size = get_metric_results(dom_size_list, result.dom_size)
+    result.bootup_time = get_metric_results(bootup_time_list, result.bootup_time)
 
     save_results(type_of_rendering)
 
