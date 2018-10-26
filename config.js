@@ -21,22 +21,18 @@ const settings = {
     maxWaitForLoad: 45 * 1000,
     throttlingMethod: 'simulate',
     throttling: throttling.mobileSlow4G,
-    auditMode: true,
-    gatherMode: true,
+    auditMode: false,
+    gatherMode: false,
     disableStorageReset: false,
     disableDeviceEmulation: false,
-    emulatedFormFactor: 'mobile',
+    emulatedFormFactor: 'desktop',
     locale: 'en-US',
     blockedUrlPatterns: null,
     additionalTraceCategories: null,
     extraHeaders: null,
     onlyAudits: null,
     onlyCategories: null,
-    skipAudits: null,
-    crawler: {
-        maxDepth: 2,
-        maxChromeInstances: 5
-    }
+    skipAudits: null
 }
 
 const passes = [{
