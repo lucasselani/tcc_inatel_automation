@@ -2,7 +2,7 @@ URLS = [
     'https://client-side-app.herokuapp.com/',
     'https://server-side-app.herokuapp.com/'
 ]
-ENDPOINTS = [
+NAMES = [
     'CSR',
     'SSR'
 ]

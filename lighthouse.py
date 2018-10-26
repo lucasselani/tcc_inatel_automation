@@ -18,14 +18,14 @@ def clean_folders():
     for f in files:
         os.remove(f)
 
-def execute_lighthouse(url, endpoint, index):
+def execute_lighthouse(url, name, index):
     time.sleep(0.2)
     os.system(('lighthouse %s --output json\
         --output-path=./report/%s_report_%s.json\
         --config-path=./config.js')\
-        % (url, endpoint, index)) 
+        % (url, name, index)) 
     path = os.path.dirname(os.path.abspath(__file__)) + \
-        (('\\report\\%s_report_%s.json') % (endpoint, index))
+        (('\\report\\%s_report_%s.json') % (name, index))
     return os.path.isfile(path)
 
 def loop_through(interactions):
@@ -36,9 +36,9 @@ def loop_through(interactions):
             success = False
             while not success:
                 success = execute_lighthouse\
-                    (constants.URLS[index], constants.ENDPOINTS[index], interaction)
+                    (constants.URLS[index], constants.NAMES[index], interaction)
         
-            results = filter.filter_results(interaction, constants.ENDPOINTS[index])
+            results = filter.filter_results(interaction, constants.NAMES[index])
             if results.is_valid:
                 filtered_results[index].append(results)
 
@@ -47,7 +47,7 @@ def loop_through(interactions):
 def test(interactions=constants.NUMBER_OF_INTERACTIONS):
     results = loop_through(interactions) 
     for index in range(0, constants.QUANTITY):
-        extract.metrics(results[index], constants.ENDPOINTS[index], interactions)
+        extract.metrics(results[index], constants.NAMES[index], interactions)
 
 def main():
     clean_folders()

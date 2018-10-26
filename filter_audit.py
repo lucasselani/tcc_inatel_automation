@@ -5,10 +5,10 @@ import json
 import data_model
 import os
 
-def filter_results(index_of_execution, endpoint):
+def filter_results(index_of_execution, name):
     data = data_model.Data()
     path = os.path.dirname(os.path.abspath(__file__)) + \
-      (('\\report\\%s_report_%s.json') % (endpoint, index_of_execution))
+      (('\\report\\%s_report_%s.json') % (name, index_of_execution))
     with open(path, 'r') as f:
 		  json_data = json.load(f)
 
