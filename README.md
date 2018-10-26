@@ -2,7 +2,8 @@
 Este repositório contém o script de autamatização usado para extrair as métricas dos sites.
 
 # Branchs
-- lighthouse: Contém o código principal para uso no TCC.
+- lighthouse e master: Contém o código principal para uso no TCC.
+- lighthouse-js: Contém o início da tentativa de usar JS para fazer automatização.
 
 # Configurar ambiente
 - Instalar o [Python2](https://www.python.org/downloads/release/python-2715/), versão mais recente.
