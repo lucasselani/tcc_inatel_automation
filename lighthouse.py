@@ -5,16 +5,12 @@
 
 import filter_audit as filter
 import extract_metrics as extract
+import constants
 import time
 import os
 import glob
 import sys
-
-CSR = 'csr'
-SSR = 'ssr'
-CSR_URL = 'https://client-side-app.herokuapp.com/'
-SSR_URL = 'https://server-side-app.herokuapp.com/'
-NUMBER_OF_INTERACTIONS = 100
+from collections import defaultdict
 
 def clean_folders():
     path = os.path.dirname(os.path.abspath(__file__)) + '\\report\*'
@@ -22,43 +18,36 @@ def clean_folders():
     for f in files:
         os.remove(f)
 
-def execute_lighthouse(url, type_of_rendering, index):
+def execute_lighthouse(url, endpoint, index):
     time.sleep(0.2)
     os.system(('lighthouse %s --output json\
         --output-path=./report/%s_report_%s.json\
         --config-path=./config.js')\
-        % (url, type_of_rendering, index)) 
+        % (url, endpoint, index)) 
     path = os.path.dirname(os.path.abspath(__file__)) + \
-        (('\\report\\%s_report_%s.json') % (type_of_rendering, index))
+        (('\\report\\%s_report_%s.json') % (endpoint, index))
     return os.path.isfile(path)
 
-def loop_through(i, ssr_url = SSR_URL, csr_url = CSR_URL):
-    ssr_filtered_results = []
-    csr_filtered_results = []
+def loop_through(interactions):
+    filtered_results = defaultdict(list)
 
-    for x in range(0, i):
-        success = False
-        while not success:
-            success = execute_lighthouse(ssr_url, SSR, x)
-            
-        success = False
-        while not success:
-            success = execute_lighthouse(csr_url, CSR, x)
+    for interaction in range(0, interactions):
+        for index in range(0, constants.QUANTITY):
+            success = False
+            while not success:
+                success = execute_lighthouse\
+                    (constants.URLS[index], constants.ENDPOINTS[index], interaction)
         
-        ssr_results = filter.filter_results(x, SSR)
-        if ssr_results.is_valid:
-            ssr_filtered_results.append(ssr_results)
+            results = filter.filter_results(interaction, constants.ENDPOINTS[index])
+            if results.is_valid:
+                filtered_results[index].append(results)
 
-        csr_results = filter.filter_results(x, CSR)
-        if csr_results.is_valid:
-            csr_filtered_results.append(csr_results)
+    return filtered_results
 
-    return ssr_filtered_results, csr_filtered_results
-
-def test(interactions=NUMBER_OF_INTERACTIONS):
-    ssr_results, csr_results = loop_through(interactions) 
-    extract.metrics(ssr_results, SSR, interactions)
-    extract.metrics(csr_results, CSR, interactions)
+def test(interactions=constants.NUMBER_OF_INTERACTIONS):
+    results = loop_through(interactions) 
+    for index in range(0, constants.QUANTITY):
+        extract.metrics(results[index], constants.ENDPOINTS[index], interactions)
 
 def main():
     clean_folders()

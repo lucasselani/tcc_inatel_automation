@@ -36,7 +36,7 @@ def validate_data(data, list):
     else:
         result.number_of_none_values = result.number_of_none_values + 1
 
-def metrics(data_list, type_of_rendering, number_of_interactions):
+def metrics(data_list, endpoint, number_of_interactions):
     first_contentful_paint_list = []
     first_meaningful_paint_list = []
     speed_index_list = []
@@ -60,7 +60,7 @@ def metrics(data_list, type_of_rendering, number_of_interactions):
         validate_data(data.dom_size, dom_size_list)
         validate_data(data.bootup_time, bootup_time_list)
 
-    result.report = type_of_rendering
+    result.report = endpoint
     result.date = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
     result.number_of_interactions = len(data_list)
     result.total_number_of_interactions = number_of_interactions
@@ -76,5 +76,5 @@ def metrics(data_list, type_of_rendering, number_of_interactions):
     result.dom_size = get_metric_results(dom_size_list, result.dom_size)
     result.bootup_time = get_metric_results(bootup_time_list, result.bootup_time)
 
-    save_results(type_of_rendering)
+    save_results(endpoint)
 
