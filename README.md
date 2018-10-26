@@ -24,4 +24,5 @@ Executa a mesma quantidade de vezes definida no arquivo constants.py
 Dentro do arquivo constants.py:
 - Adicionar a URL desejada na lista URLS
 - Adicionar um nome para o resulta na listas NAMES
+
 ***(Manter a URL e o nome na mesma ordem/posição nas duas listas)***
