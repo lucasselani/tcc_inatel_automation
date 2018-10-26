@@ -24,7 +24,9 @@ def clean_folders():
 
 def execute_lighthouse(url, type_of_rendering, index):
     time.sleep(1)
-    os.system(('lighthouse %s --output json --output-path=./report/%s_report_%s.json')\
+    os.system(('lighthouse %s --output json\
+        --output-path=./report/%s_report_%s.json\
+        --config-path=./config.js')\
         % (url, type_of_rendering, index)) 
     path = os.path.dirname(os.path.abspath(__file__)) + \
         (('\\report\\%s_report_%s.json') % (type_of_rendering, index))
