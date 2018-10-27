@@ -2,7 +2,7 @@
 Este repositório contém o script de autamatização usado para extrair as métricas dos sites.
 
 # Branchs
-- lighthouse e master: Contém o código principal para uso no TCC.
+- master: Contém o código principal para uso no TCC.
 - lighthouse-js: Contém o início da tentativa de usar JS para fazer automatização.
 
 # Configurar ambiente
@@ -24,4 +24,5 @@ Executa a mesma quantidade de vezes definida no arquivo constants.py
 Dentro do arquivo constants.py:
 - Adicionar a URL desejada na lista URLS
 - Adicionar um nome para o resulta na listas NAMES
+
 ***(Manter a URL e o nome na mesma ordem/posição nas duas listas)***
