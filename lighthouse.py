@@ -11,6 +11,7 @@ import os
 import glob
 import sys
 from collections import defaultdict
+from progressbar import ProgressBar, Timer, Counter
 
 def clean_folders():
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'report', '*')
@@ -23,7 +24,8 @@ def execute_lighthouse(url, name, index):
     os.system(('lighthouse %s --output json\
         --output-path=./report/%s_report_%s.json\
         --config-path=./config.js\
-        --disable-device-emulation')\
+        --disable-device-emulation\
+        --quiet')\
         % (url, name, index)) 
     file_path = ('%s_report_%s.json') % (name, index)
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'report', file_path)
@@ -32,8 +34,19 @@ def execute_lighthouse(url, name, index):
 def loop_through(interactions):
     filtered_results = defaultdict(list)
 
+    # total de iterações
+    total = interactions * constants.QUANTITY
+
+    # configura progressBar
+    pbar = ProgressBar(
+        widgets=['| ', Counter(), ' of ', str(total), ' requests | ', Timer()],
+        maxval=total
+    ).start()
+
+    # inicia loop
     for interaction in range(0, interactions):
         for index in range(0, constants.QUANTITY):
+            pbar.update((interaction+1)*(index+1)) # update progressBar
             success = False
             while not success:
                 success = execute_lighthouse\
@@ -42,6 +55,7 @@ def loop_through(interactions):
             results = filter.filter_results(interaction, constants.NAMES[index])
             if results.is_valid:
                 filtered_results[index].append(results)
+    pbar.finish() # ends progressBar
 
     return filtered_results
 
