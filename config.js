@@ -24,7 +24,7 @@ const settings = {
     auditMode: false,
     gatherMode: false,
     disableStorageReset: false,
-    disableDeviceEmulation: false,
+    disableDeviceEmulation: true,
     emulatedFormFactor: 'desktop',
     locale: 'en-US',
     blockedUrlPatterns: null,

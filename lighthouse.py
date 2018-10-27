@@ -22,7 +22,8 @@ def execute_lighthouse(url, name, index):
     time.sleep(0.2)
     os.system(('lighthouse %s --output json\
         --output-path=./report/%s_report_%s.json\
-        --config-path=./config.js')\
+        --config-path=./config.js\
+        --disable-device-emulation')\
         % (url, name, index)) 
     path = os.path.dirname(os.path.abspath(__file__)) + \
         (('\\report\\%s_report_%s.json') % (name, index))
