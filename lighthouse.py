@@ -44,9 +44,10 @@ def loop_through(interactions):
     ).start()
 
     # inicia loop
+    currentRequest = 0
     for interaction in range(0, interactions):
         for index in range(0, constants.QUANTITY):
-            pbar.update((interaction+1)*(index+1)) # update progressBar
+            currentRequest += 1
             success = False
             while not success:
                 success = execute_lighthouse\
@@ -55,6 +56,7 @@ def loop_through(interactions):
             results = filter.filter_results(interaction, constants.NAMES[index])
             if results.is_valid:
                 filtered_results[index].append(results)
+            pbar.update(currentRequest) # update progressBar
     pbar.finish() # ends progressBar
 
     return filtered_results
