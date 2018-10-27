@@ -25,8 +25,8 @@ def execute_lighthouse(url, name, index):
         --config-path=./config.js\
         --disable-device-emulation')\
         % (url, name, index)) 
-    path = os.path.dirname(os.path.abspath(__file__)) + \
-        (('\\report\\%s_report_%s.json') % (name, index))
+    file_path = ('%s_report_%s.json') % (name, index)
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'report', file_path)
     return os.path.isfile(path)
 
 def loop_through(interactions):
