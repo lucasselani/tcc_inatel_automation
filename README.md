@@ -9,6 +9,7 @@ Este repositório contém o script de autamatização usado para extrair as mét
 - Instalar o [Python2](https://www.python.org/downloads/release/python-2715/), versão mais recente.
 - Instalar o [Node](https://nodejs.org/en/download/) no PC, versão mais recente.
 - Executar no bash: pip install numpy && pip install scipy
+- Executar no bash: pip install progresbar
 - Executar no bash: npm install lighthouse -g
 
 # Executar script
