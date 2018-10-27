@@ -13,7 +13,7 @@ import sys
 from collections import defaultdict
 
 def clean_folders():
-    path = os.path.dirname(os.path.abspath(__file__)) + '\\report\*'
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'report', '*')
     files = glob.glob(path)
     for f in files:
         os.remove(f)

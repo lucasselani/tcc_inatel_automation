@@ -7,8 +7,8 @@ import os
 
 def filter_results(index_of_execution, name):
     data = data_model.Data()
-    path = os.path.dirname(os.path.abspath(__file__)) + \
-      (('\\report\\%s_report_%s.json') % (name, index_of_execution))
+    file_path = ('%s_report_%s.json') % (name, index_of_execution)
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'report', file_path)
     with open(path, 'r') as f:
 		  json_data = json.load(f)
 

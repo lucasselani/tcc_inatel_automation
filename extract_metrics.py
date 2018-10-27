@@ -25,8 +25,8 @@ def mean_confidence_interval(data, confidence=0.95):
     return m, m-h, m+h, np.std(a), h
 
 def save_results(type_of_rendering):
-    path = os.path.dirname(os.path.abspath(__file__)) + \
-        (('\\result\\%s_result_%s.json') % (int(time.time()), type_of_rendering))
+    file_path = ('%s_result_%s.json') % (int(time.time()), type_of_rendering)
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'result', file_path)
     with open(path, 'w') as f_json:
 		json.dump(vars(result), f_json)
 
