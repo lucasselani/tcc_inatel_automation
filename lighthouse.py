@@ -25,6 +25,7 @@ def execute_lighthouse(url, name, index):
         --output-path=./report/%s_report_%s.json\
         --config-path=./config.js\
         --disable-device-emulation\
+        --disable-throttling\
         --quiet')\
         % (url, name, index)) 
     file_path = ('%s_report_%s.json') % (name, index)
